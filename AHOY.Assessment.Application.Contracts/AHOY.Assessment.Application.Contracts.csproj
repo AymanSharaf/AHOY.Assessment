@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AHOY.Assessment.Core\AHOY.Assessment.Core.csproj" />
+  </ItemGroup>
+
 </Project>
