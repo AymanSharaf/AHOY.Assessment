@@ -1,13 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.4.0" />
-  </ItemGroup>
+    <Target Name="CopyToAPI" AfterTargets="Build">
+        <ItemGroup>
+            <DLLs Include="$(TargetDir)\*.*"/>
+        </ItemGroup>
+
+        <Copy
+          SourceFiles="@(DLLs)"
+          DestinationFolder="$(SolutionDir)\AHOY.Assessment.API\bin\$(ConfigurationName)"
+          SkipUnchangedFiles="true" />
+    </Target>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.4.0" />
+    </ItemGroup>
 
 </Project>

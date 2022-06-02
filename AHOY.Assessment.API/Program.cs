@@ -5,14 +5,19 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new APIModule());
     foreach (string dll in Directory.GetFiles(GetAssemblyDirectory(), "*.dll"))
     {
-        Console.WriteLine($"loading {dll}");
         Assembly.LoadFrom(dll);
-        builder.RegisterAssemblyModules(Assembly.LoadFile(dll));
+
+        if (dll.Contains("AHOY.Assessment.")) // to be tested 
+        {
+            Console.WriteLine($"loading {dll}");
+            builder.RegisterAssemblyModules(Assembly.LoadFile(dll));
+        }
     }
 
 });
