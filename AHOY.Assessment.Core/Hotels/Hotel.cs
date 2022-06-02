@@ -35,13 +35,13 @@ namespace AHOY.Assessment.Core.Hotels
             };
         }
 
-        public void AddRoom(int roomNumber, string name, string description)
+        public void AddRoom(int roomNumber, string name, string description, RoomType type)
         {
             if (_rooms.Any(r => r.Number.Number.Equals(roomNumber)))
             {
                 throw new ArgumentException($"This facility already exisits");
             }
-            _rooms.Add(Room.CreateNew(roomNumber, name, description));
+            _rooms.Add(Room.CreateNew(roomNumber, name, description, type));
         }
 
         public void AddFacility(string name)
