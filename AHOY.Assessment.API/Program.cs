@@ -13,7 +13,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     {
         Assembly.LoadFrom(dll);
 
-        if (dll.Contains("AHOY.Assessment.")) // to be tested 
+        if (dll.Contains("AHOY.Assessment."))
         {
             Console.WriteLine($"loading {dll}");
             builder.RegisterAssemblyModules(Assembly.LoadFile(dll));
@@ -28,12 +28,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => { return "Hello World"; });
 
 app.Run();
+
 
 string GetAssemblyDirectory()
 {

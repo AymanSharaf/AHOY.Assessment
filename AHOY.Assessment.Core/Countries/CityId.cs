@@ -1,4 +1,5 @@
 ﻿using AHOY.Assessment.Core.Common;
+using Ardalis.GuardClauses;
 
 namespace AHOY.Assessment.Core.Countries
 {
@@ -9,6 +10,10 @@ namespace AHOY.Assessment.Core.Countries
         internal static CityId GenerateNew()
         {
             return new CityId { Id = Guid.NewGuid() };
+        }
+        public static CityId FromExisting(Guid guid)
+        {
+            return new CityId { Id = Guard.Against.Default(guid) };
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

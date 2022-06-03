@@ -9,6 +9,7 @@ namespace AHOY.Assessment.Data
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AHOYDbContextFactory>().AsImplementedInterfaces();
+
             builder.Register(c =>
             {
                 var config = c.Resolve<IConfiguration>();
@@ -19,6 +20,9 @@ namespace AHOY.Assessment.Data
                 return new AHOYDbContext(options.Options);
             }).AsSelf().InstancePerLifetimeScope();
 
+            builder.RegisterType<DatabaseInitializer>().AsImplementedInterfaces(); // This is only becasue there is an issue in loading Microsoft.Data.SqlClient dynmaiclly in runtime
+            // The other solution is to add package Microsoft.EntityFrameworkCore.SqlServer in API
+            // Which sadly I did in the end to make Update-Database and Remove-Migrations work 
         }
     }
 }
