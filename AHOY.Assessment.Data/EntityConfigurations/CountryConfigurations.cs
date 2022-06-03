@@ -14,7 +14,8 @@ namespace AHOY.Assessment.Data.EntityConfigurations
                                         .HasColumnName("Id").IsRequired();
 
             builder.OwnsOne(c => c.Name, b => { b.Property(p => p.Value).HasMaxLength(250).HasColumnName("Name"); });
-            builder.Ignore(p => p.Cities);
+
+            builder.HasMany(c => c.Cities).WithOne().HasForeignKey("CountryId").IsRequired();
         }
     }
 }
