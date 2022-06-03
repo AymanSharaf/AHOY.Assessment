@@ -1,0 +1,35 @@
+﻿using AHOY.Assessment.Core.Countries;
+using AHOY.Assessment.Core.Hotels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace AHOY.Assessment.Data.EntityConfigurations
+{
+    public class HotelConfigurations : IEntityTypeConfiguration<Hotel>
+    {
+        public void Configure(EntityTypeBuilder<Hotel> builder)
+        {
+            builder.ToTable("Hotels");
+
+            builder.Property(x => x.Id).HasConversion(x => x.Id, l => HotelId.FromExisting(l))
+                                      .HasColumnName("Id").IsRequired();
+
+            builder.OwnsOne(c => c.Name, b => { b.Property(p => p.Name).HasMaxLength(250).HasColumnName("Name"); });
+
+            builder.OwnsOne(c => c.Address, b => { b.Property(p => p.Value).HasMaxLength(250).HasColumnName("Address"); });
+
+            builder.OwnsOne(c => c.Location, b =>
+            {
+                b.Property(p => p.Latitude).HasColumnName("Latitude");
+                b.Property(p => p.Longitude).HasColumnName("Longitude");
+            });
+
+            builder.HasOne<City>().WithMany().HasForeignKey("CityId").IsRequired();
+
+            builder.Property(x => x.CityId).HasConversion(x => x.Id, l => CityId.FromExisting(l))
+                        .HasColumnName("CityId");
+
+            builder.Ignore(p => p.Facilities);
+        }
+    }
+}

@@ -1,4 +1,5 @@
 ﻿using AHOY.Assessment.Core.Countries;
+using AHOY.Assessment.Core.Hotels;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -8,7 +9,7 @@ namespace AHOY.Assessment.Data
     {
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
-        //public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
         //public DbSet<Room> Rooms { get; set; }
         //public DbSet<Facility> Facilities { get; set; }
         //public DbSet<HotelReview> HotelReviews { get; set; }
