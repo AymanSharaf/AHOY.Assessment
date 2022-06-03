@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Bookings\" />
     <Folder Include="Countries\Commands\" />
     <Folder Include="Hotels\Commands\" />
     <Folder Include="Images\" />
