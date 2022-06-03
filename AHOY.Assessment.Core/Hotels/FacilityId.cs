@@ -1,4 +1,5 @@
 ﻿using AHOY.Assessment.Core.Common;
+using Ardalis.GuardClauses;
 
 namespace AHOY.Assessment.Core.Hotels
 {
@@ -9,6 +10,11 @@ namespace AHOY.Assessment.Core.Hotels
         internal static FacilityId GenerateFacilityId()
         {
             return new FacilityId { Id = Guid.NewGuid() };
+        }
+
+        public static FacilityId FromExisting(Guid guid)
+        {
+            return new FacilityId { Id = Guard.Against.Default(guid) };
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

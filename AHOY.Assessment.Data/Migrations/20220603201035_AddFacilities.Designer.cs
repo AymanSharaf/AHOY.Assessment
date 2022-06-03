@@ -4,6 +4,7 @@ using AHOY.Assessment.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AHOY.Assessment.Data.Migrations
 {
     [DbContext(typeof(AHOYDbContext))]
-    partial class AHOYDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220603201035_AddFacilities")]
+    partial class AddFacilities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,7 +110,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("HotelFacilities", (string)null);
+                    b.ToTable("HotelFacilities");
                 });
 
             modelBuilder.Entity("AHOY.Assessment.Core.Countries.City", b =>
@@ -119,7 +121,7 @@ namespace AHOY.Assessment.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("AHOY.Assessment.Core.Countries.City.Name#AHOY.Assessment.Core.Countries.Name", "Name", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Countries.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("CityId")
                                 .HasColumnType("uniqueidentifier");
@@ -132,7 +134,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("CityId");
 
-                            b1.ToTable("Cities", (string)null);
+                            b1.ToTable("Cities");
 
                             b1.WithOwner()
                                 .HasForeignKey("CityId");
@@ -144,7 +146,7 @@ namespace AHOY.Assessment.Data.Migrations
 
             modelBuilder.Entity("AHOY.Assessment.Core.Countries.Country", b =>
                 {
-                    b.OwnsOne("AHOY.Assessment.Core.Countries.Country.Name#AHOY.Assessment.Core.Countries.Name", "Name", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Countries.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("CountryId")
                                 .HasColumnType("uniqueidentifier");
@@ -157,7 +159,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("CountryId");
 
-                            b1.ToTable("Countries", (string)null);
+                            b1.ToTable("Countries");
 
                             b1.WithOwner()
                                 .HasForeignKey("CountryId");
@@ -169,7 +171,7 @@ namespace AHOY.Assessment.Data.Migrations
 
             modelBuilder.Entity("AHOY.Assessment.Core.Hotels.Facility", b =>
                 {
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Facility.Name#AHOY.Assessment.Core.Hotels.FacilityName", "Name", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.FacilityName", "Name", b1 =>
                         {
                             b1.Property<Guid>("FacilityId")
                                 .HasColumnType("uniqueidentifier");
@@ -182,7 +184,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("FacilityId");
 
-                            b1.ToTable("Facilities", (string)null);
+                            b1.ToTable("Facilities");
 
                             b1.WithOwner()
                                 .HasForeignKey("FacilityId");
@@ -200,7 +202,7 @@ namespace AHOY.Assessment.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Hotel.Address#AHOY.Assessment.Core.Hotels.Address", "Address", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("HotelId")
                                 .HasColumnType("uniqueidentifier");
@@ -213,13 +215,32 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("HotelId");
 
-                            b1.ToTable("Hotels", (string)null);
+                            b1.ToTable("Hotels");
 
                             b1.WithOwner()
                                 .HasForeignKey("HotelId");
                         });
 
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Hotel.Location#AHOY.Assessment.Core.Hotels.Location", "Location", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.HotelName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("HotelId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("HotelId");
+
+                            b1.ToTable("Hotels");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HotelId");
+                        });
+
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Location", "Location", b1 =>
                         {
                             b1.Property<Guid>("HotelId")
                                 .HasColumnType("uniqueidentifier");
@@ -234,26 +255,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("HotelId");
 
-                            b1.ToTable("Hotels", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("HotelId");
-                        });
-
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Hotel.Name#AHOY.Assessment.Core.Hotels.HotelName", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("HotelId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(250)
-                                .HasColumnType("nvarchar(250)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("HotelId");
-
-                            b1.ToTable("Hotels", (string)null);
+                            b1.ToTable("Hotels");
 
                             b1.WithOwner()
                                 .HasForeignKey("HotelId");
@@ -277,7 +279,7 @@ namespace AHOY.Assessment.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Room.Description#AHOY.Assessment.Core.Hotels.RoomDescription", "Description", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.RoomDescription", "Description", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
@@ -290,13 +292,13 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("RoomId");
 
-                            b1.ToTable("Rooms", (string)null);
+                            b1.ToTable("Rooms");
 
                             b1.WithOwner()
                                 .HasForeignKey("RoomId");
                         });
 
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Room.Name#AHOY.Assessment.Core.Hotels.RoomName", "Name", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.RoomName", "Name", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
@@ -309,13 +311,13 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("RoomId");
 
-                            b1.ToTable("Rooms", (string)null);
+                            b1.ToTable("Rooms");
 
                             b1.WithOwner()
                                 .HasForeignKey("RoomId");
                         });
 
-                    b.OwnsOne("AHOY.Assessment.Core.Hotels.Room.Number#AHOY.Assessment.Core.Hotels.RoomNumber", "Number", b1 =>
+                    b.OwnsOne("AHOY.Assessment.Core.Hotels.RoomNumber", "Number", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
@@ -326,7 +328,7 @@ namespace AHOY.Assessment.Data.Migrations
 
                             b1.HasKey("RoomId");
 
-                            b1.ToTable("Rooms", (string)null);
+                            b1.ToTable("Rooms");
 
                             b1.WithOwner()
                                 .HasForeignKey("RoomId");

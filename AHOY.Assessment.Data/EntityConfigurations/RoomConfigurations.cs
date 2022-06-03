@@ -24,7 +24,6 @@ namespace AHOY.Assessment.Data.EntityConfigurations
 
             builder.OwnsOne(c => c.Number, b => { b.Property(p => p.Number).HasColumnName("RoomName"); });
 
-
         }
     }
 }

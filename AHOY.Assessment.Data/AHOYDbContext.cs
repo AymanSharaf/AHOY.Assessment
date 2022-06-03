@@ -10,8 +10,8 @@ namespace AHOY.Assessment.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
-        //public DbSet<Room> Rooms { get; set; }
-        //public DbSet<Facility> Facilities { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Facility> Facilities { get; set; }
         //public DbSet<HotelReview> HotelReviews { get; set; }
         //public DbSet<Review> Reviews { get; set; }
         //public DbSet<StarRating> StarRatings { get; set; }
@@ -21,8 +21,7 @@ namespace AHOY.Assessment.Data
 
         public AHOYDbContext(DbContextOptions options) : base(options)
         {
-            //Database.EnsureCreated();
-            //Database.Migrate(); // This is only a shortcut because SQL Client is not loaded correctly 
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

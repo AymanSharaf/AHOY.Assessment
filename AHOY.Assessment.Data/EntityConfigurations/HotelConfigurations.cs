@@ -31,7 +31,20 @@ namespace AHOY.Assessment.Data.EntityConfigurations
 
             builder.HasMany(h => h.Rooms).WithOne().IsRequired().HasForeignKey("HotelId");
 
-
+            builder.HasMany(h => h.Facilities).WithMany("_hotels").UsingEntity<Dictionary<string, object>>(
+        "HotelFacilities",
+        j => j
+            .HasOne<Facility>()
+            .WithMany()
+            .HasForeignKey("FacilityId")
+            .HasConstraintName("FK_HotelFacilities_Facility_FacilityId")
+            .OnDelete(DeleteBehavior.Cascade),
+        j => j
+            .HasOne<Hotel>()
+            .WithMany()
+            .HasForeignKey("HotelId")
+            .HasConstraintName("FK_HotelFacilities_Hotels_HotelId")
+            .OnDelete(DeleteBehavior.ClientCascade)); ;
         }
     }
 }
