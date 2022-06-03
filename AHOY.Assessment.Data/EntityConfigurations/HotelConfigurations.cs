@@ -29,7 +29,9 @@ namespace AHOY.Assessment.Data.EntityConfigurations
             builder.Property(x => x.CityId).HasConversion(x => x.Id, l => CityId.FromExisting(l))
                         .HasColumnName("CityId");
 
-            builder.Ignore(p => p.Facilities);
+            builder.HasMany(h => h.Rooms).WithOne().IsRequired().HasForeignKey("HotelId");
+
+
         }
     }
 }
