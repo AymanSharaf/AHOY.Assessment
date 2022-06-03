@@ -1,5 +1,8 @@
 using AHOY.Assessment.API;
 using AHOY.Assessment.Application.Contracts;
+using AHOY.Assessment.Application.Contracts.Bookings.Dtos;
+using AHOY.Assessment.Application.Contracts.Hotels.Dtos;
+using AHOY.Assessment.Application.Contracts.Hotels.Queries;
 using AHOY.Assessment.Core.Countries.Commands;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -16,9 +19,9 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     {
         Assembly.LoadFrom(dll);
 
-        if (dll.Contains("AHOY.Assessment."))
+        if (dll.Contains("AHOY.Assessment."))// This should be checking on the name of dll not the path
         {
-            Console.WriteLine($"loading {dll}");
+            Console.WriteLine($"loading {dll}"); // For checking which assembly loaded in run time
             builder.RegisterAssemblyModules(Assembly.LoadFile(dll));
         }
     }
@@ -34,15 +37,31 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/", () => { return "Hello World"; });
-
-app.MapGet("/hi", () => { return "Hello World"; });
+// Endpoints can be (and should be) registered in seperate files, This is only a shortcut (I don't mean using minimal APIs I think it's awesome)
 
 app.MapPost("/Country", async ([FromBody] string name, IDispatcher dispatcher) =>
 {
     await dispatcher.DispatchAsync(new AddContryCommand(name));
     return Results.NoContent();
 });
+
+app.MapPost("/Booking", async ([FromBody] BookingDto input, IDispatcher dispatcher) =>
+{
+    //await dispatcher.DispatchAsync(new AddContryCommand(name));
+    return Results.NoContent();
+});
+
+app.MapGet("/Hotel/{id}", async (Guid id, IDispatcher dispatcher) =>
+{
+    var hotel = await dispatcher.DispatchAsync(new GetHotelQuery(id));
+    return Results.Ok(hotel);
+}).Produces<HotelDto>();
+
+app.MapGet("/Hotels", async (string? searchTerm, IDispatcher dispatcher) =>
+{
+    var hotel = await dispatcher.DispatchAsync(new SearchHotelsQuery(searchTerm));
+    return Results.Ok(hotel);
+}).Produces<List<HotelDto>>();
 
 app.Run();
 

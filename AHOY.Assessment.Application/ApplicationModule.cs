@@ -1,5 +1,6 @@
 ﻿using AHOY.Assessment.Application.Contracts;
 using AHOY.Assessment.Application.Country.CommandHandlers;
+using AHOY.Assessment.Application.Hotel.QueryHandlers;
 using AHOY.Assessment.Data;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace AHOY.Assessment.Application
 
             builder.RegisterType<Dispatcher>().As<IDispatcher>();
             builder.RegisterType<AddCountryCommandHandler>().AsImplementedInterfaces();
+            builder.RegisterType<GetHotelQueryHandler>().AsImplementedInterfaces();
         }
     }
 }
