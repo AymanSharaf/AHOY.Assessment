@@ -1,6 +1,9 @@
 using AHOY.Assessment.API;
+using AHOY.Assessment.Application.Contracts;
+using AHOY.Assessment.Core.Countries.Commands;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,11 +31,18 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapGet("/", () => { return "Hello World"; });
+
+app.MapGet("/hi", () => { return "Hello World"; });
+
+app.MapPost("/Country", async ([FromBody] string name, IDispatcher dispatcher) =>
+{
+    await dispatcher.DispatchAsync(new AddContryCommand(name));
+    return Results.NoContent();
+});
 
 app.Run();
 

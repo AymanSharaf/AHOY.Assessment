@@ -19,7 +19,7 @@ namespace AHOY.Assessment.Application
             Type[] typeArgs = { command.GetType() };
             Type handlerType = type.MakeGenericType(typeArgs);
 
-            using (var scope = _serviceProvider.CreateScope()) // consider the lifetime of unitofwork
+            using (var scope = _serviceProvider.CreateScope())
             {
                 dynamic handler = _serviceProvider.GetRequiredService(handlerType);
                 await handler.HandleAsync((dynamic)command);

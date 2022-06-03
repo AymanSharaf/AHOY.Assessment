@@ -6,7 +6,7 @@ namespace AHOY.Assessment.API
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+
         }
     }
 }

@@ -4,17 +4,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
     
     <Target Name="CopyToAPI" AfterTargets="Build">
         <ItemGroup>
-            <DLLs Include="$(TargetDir)\*.*"/>
+            <DLLs Include="$(TargetDir)\*.*" />
         </ItemGroup>
 
-        <Copy
-          SourceFiles="@(DLLs)"
-          DestinationFolder="$(SolutionDir)\AHOY.Assessment.API\bin\$(ConfigurationName)"
-          SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(DLLs)" DestinationFolder="$(SolutionDir)\AHOY.Assessment.API\bin\$(ConfigurationName)" SkipUnchangedFiles="true" />
     </Target>
     
   <ItemGroup>
@@ -24,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AHOY.Assessment.Application.Contracts\AHOY.Assessment.Application.Contracts.csproj" />
+    <ProjectReference Include="..\AHOY.Assessment.Data\AHOY.Assessment.Data.csproj" />
   </ItemGroup>
 
 </Project>

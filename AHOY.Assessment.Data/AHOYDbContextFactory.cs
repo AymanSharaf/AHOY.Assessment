@@ -15,7 +15,7 @@ namespace AHOY.Assessment.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<AHOYDbContext>();
 
-            optionsBuilder.UseSqlServer("Server=tcp:localhost,1433;Initial Catalog=AHOYDB;User Id=sa;Password=P@ssword; "); // Could be read from environment variable 
+            optionsBuilder.UseSqlServer("Server=tcp:localhost,1433;Initial Catalog=AHOYDB;User Id=sa;Password=P@ssword;"); // Could be read from environment variable 
 
             return new AHOYDbContext(optionsBuilder.Options); // That's ok here because AHOYDbContext is considered a "Local Default"
         }
